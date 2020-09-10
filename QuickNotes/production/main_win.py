@@ -8,7 +8,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from . import style
 
 
 
@@ -20,32 +19,19 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
-
-
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(20, 260, 751, 291))
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setColumnCount(4)
         self.tableWidget.setRowCount(0)
-        self.column_label = ('№', 'Дата публикации', 'Заметка', 'check')
+        self.column_label = ('№', 'Дата публикации', 'Заметка', 'Пометить на удаление')
         self.tableWidget.setHorizontalHeaderLabels(self.column_label)
         self.tableWidget.setSortingEnabled(True)
-
-        # widget = self.create_checkbox_for_table()
-        # self.tableWidget.setCellWidget(0, 4, widget)
-        # self.tableWidget.setItem(0, 1, QtWidgets.QTableWidgetItem("Text in column 2"))
-        # self.tableWidget.setItem(0, 2, QtWidgets.QTableWidgetItem("Text in column 3"))
-
-
 
         self.new_entry = QtWidgets.QPushButton(self.centralwidget)
         self.new_entry.setGeometry(QtCore.QRect(660, 10, 101, 23))
         self.new_entry.setMouseTracking(True)
         self.new_entry.setObjectName("new_entry")
-
-        # self.calendarWidget = QtWidgets.QCalendarWidget(self.centralwidget)
-        # self.calendarWidget.setGeometry(QtCore.QRect(20, 20, 296, 183))
-        # self.calendarWidget.setObjectName("calendarWidget")
 
         self.errormessage = QtWidgets.QLabel(self.centralwidget)
         self.errormessage.setGeometry(QtCore.QRect(15, 111, 460, 19))
@@ -54,7 +40,6 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.errormessage.setFont(font)
-
 
         self.line = QtWidgets.QFrame(self.centralwidget)
         self.line.setGeometry(QtCore.QRect(17, 230, 751, 20))
@@ -94,26 +79,13 @@ class Ui_MainWindow(object):
         self.noth_chos_sign.setObjectName("noth_chos_sign")
 
 
-    # def create_checkbox_for_table(self):
-    #     pWidget = QtWidgets.QWidget()
-    #     pCheckBox = QtWidgets.QCheckBox()
-    #     pCheckBox.setCheckState(QtCore.Qt.Checked)
-    #     pLayout = QtWidgets.QHBoxLayout(pWidget)
-    #     pLayout.addWidget(pCheckBox)
-    #     pLayout.setAlignment(QtCore.Qt.AlignCenter)
-    #     pLayout.setContentsMargins(0,0,0,0)
-    #     pWidget.setLayout(pLayout)
-    #     return pWidget
-
-
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.new_entry.setText(_translate("MainWindow", "Новая запись"))
         self.delete_button.setText(_translate("MainWindow", "Удалить запись"))
         self.edit_button.setText(_translate("MainWindow", "Редактировать поле"))
-        # self.noth_chos_sign.setText(_translate("MainWindow", "Введите текст заметки:"))
+
 # style = '''
 # QTableWidget::item {background-color: white;
 # border-style: outset;

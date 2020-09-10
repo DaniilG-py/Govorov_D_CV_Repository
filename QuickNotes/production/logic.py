@@ -1,5 +1,5 @@
 from datetime import datetime
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 
 from production import main_win, class_bd
 
@@ -20,44 +20,56 @@ class MainWin(QtWidgets.QMainWindow):
         self.new_note_win = NewNoteWin()
         self.read_notes_from_db()
 
-        self.clicked_spot = []
+        self.cells_to_delete = []
         self.ui.new_entry.clicked.connect(self.new_note)
-        self.ui.delete_button.clicked.connect(self.delete_button)
-        self.ui.tableWidget.clicked.connect(self.clicked_table)
 
 
     # Заполнение таблицы данными из БД
     def read_notes_from_db(self):
-        self.data = table.read_notes()
+        self.data = table.read_notes()                 # Чтение из БД
         self.ui.tableWidget.setRowCount(len(self.data))
 
         row = 0
+
         for tup in self.data:
             coll = 0
 
             for item in tup:
+                checkbox = QtWidgets.QCheckBox(parent=self.ui.tableWidget)
+                checkbox.stateChanged.connect(self.clicked_table)
                 cellinfo = QtWidgets.QTableWidgetItem(str(item))
+
                 self.ui.tableWidget.setItem(row, coll, cellinfo)
+                self.ui.tableWidget.setCellWidget(row, 3, checkbox)
 
                 coll += 1
+
             row += 1
 
 
+    # Открытие окна новой заметки
     def new_note(self):
         print('нажато Добавить')
         self.new_note_win.show()
 
 
-    def clicked_table(self):
-        self.clicked_spot = sorted(set(index.data() for index in
-                      self.ui.tableWidget.selectedIndexes()))
+    # Проверка статуса checkbox, если True, то id записи добавляется в список на удаление
+    def clicked_table(self, state):
+        checkbox = self.sender()
+        row = self.ui.tableWidget.indexAt(checkbox.pos())
 
-
-    def delete_button(self):
-        if self.clicked_spot:
-            table.delete_note(self.clicked_spot[0])
+        if state == QtCore.Qt.Checked:
+            self.cells_to_delete.append(self.ui.tableWidget.item(row.row(), 0).text())
+            self.ui.delete_button.clicked.connect(self.delete_button)
         else:
-            print('nothing chosen')
+            self.cells_to_delete.remove(self.ui.tableWidget.item(row.row(), 0).text())
+
+
+    # Удаление выделенных записей
+    def delete_button(self, cells_to_delete):
+        if self.cells_to_delete:
+            table.delete_note(self.cells_to_delete)
+        else:
             self.ui.noth_chos_sign.setText('Выберите строку таблице, которую следует удалить')
 
 

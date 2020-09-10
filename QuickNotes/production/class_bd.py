@@ -6,7 +6,7 @@ import sqlalchemy as sa
 class Db:
 
     def __init__(self):
-        self.engine = sa.create_engine('sqlite:///db.sqlite3', echo=True)
+        self.engine = sa.create_engine('sqlite:///db.sqlite3', echo=False)
         self.conn = self.engine.connect()
         self.metadata = sa.MetaData()
         self.data = []
@@ -43,20 +43,8 @@ class Db:
         return data
 
 
-    def delete_note(self, id_for_deletion):
-
-        to_be_deleted = self.notes_table.delete().where(self.notes_table.c.id == id_for_deletion)
-        self.conn.execute(to_be_deleted)
-
-
-# tests
-
-# table = Db()
-# table.table_maker()
-# #
-# #
-# table.read_notes()
-# date = datetime.now()
-# text = 'privet dydya'
-#
-# table.add_note(date, text)
+    # Удаление заметки
+    def delete_note(self, id_for_deletion_list):
+        for item in id_for_deletion_list:
+            to_be_deleted = self.notes_table.delete().where(self.notes_table.c.id == item)
+            self.conn.execute(to_be_deleted)
