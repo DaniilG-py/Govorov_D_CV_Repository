@@ -1,0 +1,2 @@
+Здесь содержатся Некоторые решения задач из Checkio.org.
+Ссылка на аккаунт https://py.checkio.org/user/DaniilG-py/ .
