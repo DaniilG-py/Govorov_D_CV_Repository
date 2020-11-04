@@ -3,7 +3,7 @@
 
 import telebot as tb
 
-For SQLite DataBase use:
+# For SQLite DataBase use:
 from .dbworker import DbWorker
 from .config import DATABASE
 
@@ -14,7 +14,7 @@ from . import cart
 
 
 
-For SQLite DataBase use:
+# For SQLite DataBase use:
 db = DbWorker(DATABASE)
 
 # For Postgres DataBase use:
