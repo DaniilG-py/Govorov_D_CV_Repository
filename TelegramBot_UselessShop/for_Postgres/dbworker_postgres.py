@@ -65,13 +65,13 @@ class DbWorker:
 
     # Получение состава корзины по id пользователя
     def get_prod_details_from_cart(self, chat_id):
-        product_names = self.session.query(
-                        self.product_table.columns.product_name,
-            ).filter(self.cart.columns.product_id == self.product_table.columns.id).filter(self.cart.columns.customer_id == f'{chat_id}')
+        product_names = self.session.query(self.product_table.columns.product_name). \
+                    filter(self.cart.columns.product_id == self.product_table.columns.id). \
+                    filter(self.cart.columns.customer_id == f'{chat_id}')
 
-        product_prices = self.session.query(
-                        self.product_table.columns.price,
-            ).filter(self.cart.columns.product_id == self.product_table.columns.id).filter(self.cart.columns.customer_id == f'{chat_id}')
+        product_prices = self.session.query(self.product_table.columns.price). \
+                    filter(self.cart.columns.product_id == self.product_table.columns.id). \
+                    filter(self.cart.columns.customer_id == f'{chat_id}')
 
         return product_names, product_prices
 

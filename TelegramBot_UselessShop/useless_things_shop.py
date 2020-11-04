@@ -92,7 +92,4 @@ def show_cart(chat_id):
 
 
 if __name__ == '__main__':
-    if not config.TG_TOKEN:
-        print('\n\nTelegram token Not Found.\nPlease, check your config file\n\n')
-    elif config.TG_TOKEN:
-        bot.infinity_polling(True)
+    bot.infinity_polling(True)

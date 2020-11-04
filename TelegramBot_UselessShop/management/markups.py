@@ -2,14 +2,23 @@
 # для отправки их пользователю. Единственный модуль, работающий с БД.
 
 import telebot as tb
+
+For SQLite DataBase use:
 from .dbworker import DbWorker
 from .config import DATABASE
+
+# For Postgres DataBase use:
+# from .dbworker_postgres import DbWorker
+
 from . import cart
 
 
 
+For SQLite DataBase use:
 db = DbWorker(DATABASE)
 
+# For Postgres DataBase use:
+# db = DbWorker()
 
 def start_keyboard():
     markup = tb.types.ReplyKeyboardMarkup(one_time_keyboard=True)
