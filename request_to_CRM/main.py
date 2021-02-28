@@ -38,12 +38,12 @@ def send_data_to_api():
     for client in data_pack:
         print(client)
         fields = {
-        'phone': client[0],
-        'first_name': client[1],
-        'birth_date': client[2],
-        'number': client[3],
-        'client_groups': client[4],
-        }
+                'phone': client[0],
+                'first_name': client[1],
+                'birth_date': client[2],
+                'number': client[3],
+                'client_groups': client[4],
+            }
 
         request_to_api = http.request(
                 'POST',
