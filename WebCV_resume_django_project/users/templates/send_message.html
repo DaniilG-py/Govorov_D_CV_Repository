@@ -1,0 +1,20 @@
+{% extends 'base_for_users.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+
+<a style="text-decoration: none; font-size:14px; color:white;" class="navbar-brand" href="{% url 'main-page' %}">На главную</a>
+
+<hr>
+<h3 class="text-center mt-5 mb-5">Новое сообщение</h3>
+<form style="text-align: center;" action="{% url 'send_message' %}" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <p></p>
+    <input type="submit" class="btn btn-success btn-block mb-3" values="Отправить">
+</form>
+<hr>
+
+{% endblock content %}
