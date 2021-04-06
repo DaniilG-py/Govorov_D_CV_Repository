@@ -92,3 +92,46 @@ class UserMessage(models.Model):
 
     def __repr__(self):
         return f'UserMessage obg - {self.id}'
+
+
+class AnonymousUser(models.Model):
+    """
+    Анонимные (не зарегистрированные) пользователи.
+    Создаются при отправке сообщения из формы сайта.
+    """
+
+    id = models.AutoField(primary_key=True, verbose_name='ID')
+    name = models.CharField(max_length=128, verbose_name='Имя отправителя')
+    email = models.EmailField(max_length=255, unique=True, db_index=True, help_text='Электронная почта')
+    company = models.CharField(max_length=255, verbose_name='Компания пользователя', null=True, blank=True, help_text='Не обязательно')
+    phone = models.CharField(max_length=50, verbose_name='Телефон', null=True, blank=True, help_text='Не обязательно')
+    creation_date = models.DateTimeField(auto_now=True, verbose_name='Дата создания')
+    message = models.ForeignKey('AnonymousMessage', null=True, blank=True, verbose_name='Сообщения пользователя', on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name = 'Анонимный пользователь'
+        verbose_name_plural = 'Анонимные пользователи'
+        ordering = ['-creation_date']
+
+    def __str__(self):
+        return self.name
+
+
+class AnonymousMessage(models.Model):
+    """
+    Сообщения от Анонимных (не зарегистрированных) пользователей.
+    """
+
+    id = models.AutoField(primary_key=True, verbose_name='ID')
+    creation_date = models.DateTimeField(auto_now=True, verbose_name='Отправлено')
+    sender = models.ForeignKey(AnonymousUser, verbose_name='Отправитель', on_delete=models.PROTECT)
+    message_text = models.TextField(verbose_name='Текст сообщения')
+
+    class Meta:
+
+        verbose_name = 'Сообщение анонима'
+        verbose_name_plural = 'Сообщения анонимов'
+        ordering = ['-creation_date']
+
+    def __str__(self):
+        return f'От - {self.sender.name}'
