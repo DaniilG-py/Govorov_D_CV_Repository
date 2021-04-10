@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, ValidationError
 
-from .models import CustomUser, UserMessage
+from .models import CustomUser, AnonymousUser, AnonymousMessage
 
 
 class RegistrationForm(ModelForm):
@@ -88,11 +88,35 @@ class LoginForm(ModelForm):
         return self.cleaned_data
 
 
-class SendMessageForm(ModelForm):
-
+class AnonymousUserForm(ModelForm):
     class Meta:
-        model = UserMessage
+        model = AnonymousUser
         fields = [
-                'title',
-                'text',
+                'name',
+                'email',
+                'phone',
+                'company',
             ]
+
+    def clean(self):
+        name = self.cleaned_data['name']
+        if not name:
+            msg = 'Необходимо указать Ваше имя'
+            raise forms.ValidationError(msg)
+        return self.cleaned_data
+
+
+class AnonymousMessageForm(ModelForm):
+    class Meta:
+        model = AnonymousMessage
+        fields = [
+                'subject',
+                'message_text',
+            ]
+
+    def clean(self):
+        message_text = self.cleaned_data['message_text']
+        if not message_text:
+            msg = 'Введите текст сообщения'
+            raise forms.ValidationError(msg)
+        return self.cleaned_data
