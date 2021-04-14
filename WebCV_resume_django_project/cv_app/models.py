@@ -152,10 +152,10 @@ class AnonymousUser(models.Model):
     Создаются при отправке сообщения из формы сайта.
     """
 
-    name = models.CharField(max_length=128, verbose_name='Имя отправителя')
-    email = models.EmailField(max_length=255, unique=False, db_index=True, help_text='Электронная почта')
-    company = models.CharField(max_length=255, verbose_name='Компания пользователя', null=True, blank=True, help_text='Не обязательно')
-    phone = models.CharField(max_length=50, verbose_name='Телефон', null=True, blank=True, help_text='Не обязательно')
+    name = models.CharField(max_length=128, verbose_name='Имя')
+    email = models.EmailField(max_length=255, unique=False, db_index=True, verbose_name='Электронная почта')
+    company = models.CharField(max_length=255, verbose_name='Компания', null=True, blank=True)
+    phone = models.CharField(max_length=50, verbose_name='Телефон', null=True, blank=True)
     creation_date = models.DateTimeField(auto_now=True, verbose_name='Дата создания')
     message = models.ForeignKey('AnonymousMessage', null=True, blank=True, verbose_name='Сообщения пользователя', on_delete=models.PROTECT)
 
