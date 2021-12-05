@@ -7,18 +7,32 @@ from django.views.generic import View
 
 from .forms import RegistrationForm, LoginForm, AnonymousUserForm, AnonymousMessageForm
 
-from .models import WorkingExperience, EducationExperience, CustomUser, AnonymousUser, AnonymousMessage
+from .models import WorkingExperience, EducationExperience, CustomUser, AnonymousUser, AnonymousMessage, AboutMeData
 
 
 class BaseView(View):
 
     def get(self, request, *args, **kwargs):
+        """ Главная страница """
+
+        # Обработка случая отсутствия 'active=True' записей, а так же наличия нескольких.
+        # Подставляется резервный текст 'fall_back', так же проверенный на наличие и
+        # отсутствие нескольких, в ином случае передается None.
+        try:
+            about_me = AboutMeData.objects.get(active=True)
+        except (AboutMeData.MultipleObjectsReturned, AboutMeData.DoesNotExist) as e:
+            try:
+                about_me = AboutMeData.objects.get(fall_back=True)
+            except (AboutMeData.MultipleObjectsReturned, AboutMeData.DoesNotExist) as e:
+                about_me = None
+
         work_exp = WorkingExperience.objects.all()
         educ_exp = EducationExperience.objects.all()
         form_user = AnonymousUserForm
         form_mess = AnonymousMessageForm
 
         context = {
+                'about_me': about_me,
                 'work_exp': work_exp,
                 'educ_exp': educ_exp,
                 'form_user': form_user,
@@ -57,6 +71,7 @@ class BaseView(View):
 
 
 class RegistrationView(View):
+    """ Регистрация """
 
     def get(self, request, *args, **kwargs):
         form = RegistrationForm(request.POST or None)
@@ -91,6 +106,7 @@ class RegistrationView(View):
 
 
 class LoginView(View):
+    """ Авторизация """
 
     def get(self, request, *args, **kwargs):
         form = LoginForm(request.POST or None)

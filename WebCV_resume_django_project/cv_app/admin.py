@@ -6,6 +6,7 @@ from .models import (
                 CustomUser,
                 AnonymousUser,
                 AnonymousMessage,
+                AboutMeData,
             )
 
 
@@ -14,3 +15,4 @@ admin.site.register(EducationExperience)
 admin.site.register(CustomUser)
 admin.site.register(AnonymousUser)
 admin.site.register(AnonymousMessage)
+admin.site.register(AboutMeData)

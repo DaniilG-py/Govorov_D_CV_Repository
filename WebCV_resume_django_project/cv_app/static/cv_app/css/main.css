@@ -1478,7 +1478,8 @@
   .btn-neutral.btn-default {
     color: #888; }
     .btn-neutral.btn-default:hover, .btn-neutral.btn-default:focus, .btn-neutral.btn-default:active {
-      color: #979797; }
+      color: #979797;
+   }
   .btn-neutral.active, .btn-neutral:active, .btn-neutral:active:focus, .btn-neutral:active:hover, .btn-neutral.active:focus, .btn-neutral.active:hover,
   .show > .btn-neutral.dropdown-toggle,
   .show > .btn-neutral.dropdown-toggle:focus,

@@ -1,8 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import (
-                                        AbstractUser,
-                                        BaseUserManager,
-                                    )
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class WorkingExperience(models.Model):
@@ -35,6 +32,7 @@ class EducationExperience(models.Model):
     """
     Информация об обучении
     """
+
     GRAD_YEARS = (
             '2013',
             '2014',
@@ -186,3 +184,22 @@ class AnonymousMessage(models.Model):
 
     def __str__(self):
         return f'От - {self.sender.name}'
+
+
+class AboutMeData(models.Model):
+    """ Информация обо мне, для редактирования через Админ-панель """
+    ''' Параметр "active" задает запись для отображения на сайте '''
+
+    record_name = models.CharField(max_length=255, verbose_name='Имя записи')
+    about_me_text = models.TextField(verbose_name='Обо мне', blank=True, null=True)
+    active = models.BooleanField(default=False, verbose_name='Активная')
+    fall_back = models.BooleanField(default=False, verbose_name='Резервная')
+    made_on = models.DateField(auto_now=True, verbose_name='Дата добавления')
+
+    class Meta:
+        verbose_name = 'Информацию'
+        verbose_name_plural = 'Информация'
+        ordering = ['-made_on']
+
+    def __str__(self):
+        return self.about_me_text
